@@ -1,7 +1,7 @@
 services:
   api:
-    build: ../SupermarktAPI-Mannheim
-    container_name: supermarkt-api-mannheim
+    build: ../SupermarktAPI
+    container_name: supermarkt-api
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - PORT=3000
@@ -10,7 +10,7 @@ services:
       - REFRESH_CRON=${REFRESH_CRON:-0 */6 * * *}
       - API_RATE_LIMIT_PER_MINUTE=${API_RATE_LIMIT_PER_MINUTE:-60}
     volumes:
-      - ../SupermarktAPI-Mannheim/server/database:/app/server/database
+      - ../SupermarktAPI/server/database:/app/server/database
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/health"]

@@ -1,6 +1,6 @@
 # Supermarket-Frontend
 
-React-Frontend für die [Supermarkt-API Mannheim](../SupermarktAPI-Mannheim). Zeigt aktuelle Angebote, ermöglicht Suche/Filter nach Markt und verwaltet Favoriten für eingeloggte Benutzer.
+React-Frontend für die [Supermarkt-API](../SupermarktAPI). Zeigt aktuelle Angebote, ermöglicht Suche/Filter nach Markt und verwaltet Favoriten für eingeloggte Benutzer.
 
 ## Features
 

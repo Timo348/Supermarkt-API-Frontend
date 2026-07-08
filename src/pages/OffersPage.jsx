@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useFavorites } from '../hooks/useFavorites.js';
 import { getMarkets, getOffers } from '../api/offers.js';
-import * as favoritesApi from '../api/favorites.js';
 import FilterBar from '../components/FilterBar.jsx';
 import OfferCard from '../components/OfferCard.jsx';
 
@@ -17,11 +17,11 @@ function useDebounce(value, delay) {
 
 function OffersPage() {
   const { user } = useAuth();
+  const { toggleFavorite, isFavorite } = useFavorites();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [markets, setMarkets] = useState([]);
   const [offers, setOffers] = useState([]);
-  const [favorites, setFavorites] = useState(new Set());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -68,46 +68,15 @@ function OffersPage() {
     loadOffers();
   }, [debouncedSearch, selectedMarkets, currentOnly]);
 
-  const loadFavorites = useCallback(async () => {
-    if (!user) {
-      setFavorites(new Set());
-      return;
-    }
-    try {
-      const { data } = await favoritesApi.getFavorites();
-      setFavorites(new Set((data.offers || []).map((o) => String(o.id))));
-    } catch {
-      setFavorites(new Set());
-    }
-  }, [user]);
-
-  useEffect(() => {
-    loadFavorites();
-  }, [loadFavorites]);
-
-  const toggleFavorite = async (offerId) => {
-    if (!user) return;
-    const id = String(offerId);
-    try {
-      if (favorites.has(id)) {
-        await favoritesApi.removeFavorite(id);
-        setFavorites((prev) => {
-          const next = new Set(prev);
-          next.delete(id);
-          return next;
-        });
-      } else {
-        await favoritesApi.addFavorite(id);
-        setFavorites((prev) => new Set(prev).add(id));
-      }
-    } catch {
-      setError('Favorit konnte nicht aktualisiert werden.');
-    }
-  };
-
   return (
     <div className="container" style={{ paddingTop: '1.5rem', paddingBottom: '2rem' }}>
       <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>Aktuelle Angebote</h1>
+
+      {!user && (
+        <div className="card" style={{ padding: '0.75rem 1rem', marginBottom: '1rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          Melde dich an, um Angebote als Favoriten zu speichern.
+        </div>
+      )}
 
       <FilterBar
         search={search}
@@ -139,7 +108,7 @@ function OffersPage() {
             <OfferCard
               key={offer.id}
               offer={offer}
-              isFavorite={favorites.has(String(offer.id))}
+              isFavorite={isFavorite(offer.id)}
               onToggleFavorite={toggleFavorite}
             />
           ))}

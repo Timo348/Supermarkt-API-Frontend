@@ -8,8 +8,8 @@ React-Frontend für die [Supermarkt-API Mannheim](../SupermarktAPI-Mannheim). Ze
 - Suche nach Produkt, Marke oder Kategorie
 - Filter nach Markt
 - Nur-aktuelle-Angebote-Filter
-- Login / Registrierung (via API)
-- Favoriten speichern und verwalten
+- Login / Registrierung (lokal im Browser)
+- Favoriten lokal im Browser speichern und verwalten
 - Moderner, sachlicher UI-Look wie ein internes Tool
 - SVG-Kategorie-Icons statt heruntergeladener Bilder (einheitlich, lizenzfrei)
 
@@ -62,6 +62,7 @@ src/
   api/           API-Client und Endpunkte
   components/    Wiederverwendbare UI-Komponenten
   context/       React-Context für Auth
+  hooks/         Lokale Favoriten-Verwaltung
   pages/         Seitenkomponenten
   index.css      Globale Styles
 ```

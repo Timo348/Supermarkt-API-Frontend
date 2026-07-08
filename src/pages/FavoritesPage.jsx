@@ -1,51 +1,33 @@
-import { useEffect, useState, useCallback } from 'react';
-import * as favoritesApi from '../api/favorites.js';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext.jsx';
+import { useFavorites } from '../hooks/useFavorites.js';
+import { getOffers } from '../api/offers.js';
 import OfferCard from '../components/OfferCard.jsx';
 
 function FavoritesPage() {
+  const { user } = useAuth();
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [offers, setOffers] = useState([]);
-  const [favorites, setFavorites] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const { data } = await favoritesApi.getFavorites();
-      const offersList = data.offers || [];
-      setOffers(offersList);
-      setFavorites(new Set(offersList.map((o) => String(o.id))));
-    } catch {
-      setError('Favoriten konnten nicht geladen werden.');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    load();
-  }, [load]);
-
-  const toggleFavorite = async (offerId) => {
-    const id = String(offerId);
-    try {
-      if (favorites.has(id)) {
-        await favoritesApi.removeFavorite(id);
-        setOffers((prev) => prev.filter((o) => String(o.id) !== id));
-        setFavorites((prev) => {
-          const next = new Set(prev);
-          next.delete(id);
-          return next;
-        });
-      } else {
-        await favoritesApi.addFavorite(id);
-        setFavorites((prev) => new Set(prev).add(id));
+    const load = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const { data } = await getOffers({ limit: 5000 });
+        const allOffers = data.offers || [];
+        const favoriteOffers = allOffers.filter((o) => favorites.has(String(o.id)));
+        setOffers(favoriteOffers);
+      } catch {
+        setError('Favoriten konnten nicht geladen werden.');
+      } finally {
+        setLoading(false);
       }
-    } catch {
-      setError('Favorit konnte nicht aktualisiert werden.');
-    }
-  };
+    };
+    load();
+  }, [favorites]);
 
   return (
     <div className="container" style={{ paddingTop: '1.5rem', paddingBottom: '2rem' }}>
@@ -69,7 +51,7 @@ function FavoritesPage() {
             <OfferCard
               key={offer.id}
               offer={offer}
-              isFavorite={true}
+              isFavorite={isFavorite(offer.id)}
               onToggleFavorite={toggleFavorite}
             />
           ))}

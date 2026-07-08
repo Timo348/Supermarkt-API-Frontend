@@ -10,25 +10,26 @@ function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
-    try {
-      if (isRegister) {
-        await register(username, password);
-      } else {
-        await login(username, password);
-      }
-      navigate('/');
-    } catch (err) {
-      const message = err.response?.data?.error || 'Anmeldung fehlgeschlagen.';
-      setError(message);
-    } finally {
-      setLoading(false);
+
+    if (!username.trim()) {
+      setError('Benutzername ist erforderlich.');
+      return;
     }
+    if (password.length < 4) {
+      setError('Passwort muss mindestens 4 Zeichen haben.');
+      return;
+    }
+
+    if (isRegister) {
+      register(username.trim());
+    } else {
+      login(username.trim());
+    }
+    navigate('/');
   };
 
   return (
@@ -65,8 +66,8 @@ function LoginPage() {
             />
           </div>
 
-          <button type="submit" className="btn" disabled={loading} style={{ width: '100%' }}>
-            {loading ? 'Bitte warten...' : isRegister ? 'Registrieren' : 'Anmelden'}
+          <button type="submit" className="btn" style={{ width: '100%' }}>
+            {isRegister ? 'Registrieren' : 'Anmelden'}
           </button>
         </form>
 

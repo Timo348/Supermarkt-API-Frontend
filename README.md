@@ -37,11 +37,12 @@ docker build -t supermarket-frontend .
 docker run -p 8080:80 supermarket-frontend
 ```
 
-In diesem Modus erwartet der Container, dass unter `http://api:3000` das Backend erreichbar ist. Für den gemeinsamen Start mit der API wird das übergeordnete `docker-compose.yml` empfohlen:
+In diesem Modus erwartet der Container, dass unter `http://api:3000` das Backend erreichbar ist. Für den gemeinsamen Start mit der API liegt im Frontend-Repo ein `docker-compose.yml`:
 
 ```bash
-cd ..
-cp SupermarktAPI-Mannheim/.env.example .env
+cd Supermarket-Frontend
+cp .env.example .env
+# Optional PLZs oder Port anpassen
 docker compose up --build
 ```
 

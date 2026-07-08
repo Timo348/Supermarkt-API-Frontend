@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
+import { ThemeProvider } from './context/ThemeContext.jsx';
 import Header from './components/Header.jsx';
 import OffersPage from './pages/OffersPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
@@ -36,9 +37,11 @@ function AppLayout() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppLayout />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppLayout />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

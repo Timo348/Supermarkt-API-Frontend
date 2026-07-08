@@ -33,13 +33,49 @@ function LoginPage() {
   };
 
   return (
-    <div className="container" style={{ paddingTop: '3rem', maxWidth: '420px' }}>
+    <div className="container" style={{ paddingTop: '4rem', maxWidth: '420px' }}>
       <div className="card" style={{ padding: '2rem' }}>
-        <h1 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 1.5rem' }}>
-          {isRegister ? 'Konto erstellen' : 'Anmelden'}
-        </h1>
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '3.5rem',
+              height: '3.5rem',
+              borderRadius: 'var(--radius-lg)',
+              background: 'var(--primary-dim)',
+              color: 'var(--primary)',
+              marginBottom: '1rem'
+            }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '1.75rem', height: '1.75rem' }}>
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <h1 style={{ fontSize: '1.35rem', fontWeight: 800, margin: 0 }}>
+            {isRegister ? 'Konto erstellen' : 'Anmelden'}
+          </h1>
+          <p style={{ margin: '0.35rem 0 0', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            {isRegister ? 'Erstelle ein lokales Konto für Favoriten.' : 'Melde dich an, um Favoriten zu verwalten.'}
+          </p>
+        </div>
 
-        {error && <div className="error" style={{ marginBottom: '1rem' }}>{error}</div>}
+        {error && (
+          <div
+            className="error"
+            style={{
+              marginBottom: '1rem',
+              padding: '0.6rem 0.8rem',
+              borderRadius: 'var(--radius)',
+              background: 'var(--danger-dim)',
+              fontWeight: 500
+            }}
+          >
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -51,6 +87,7 @@ function LoginPage() {
               onChange={(e) => setUsername(e.target.value)}
               required
               autoComplete="username"
+              placeholder="z. B. max.mustermann"
             />
           </div>
 
@@ -63,15 +100,16 @@ function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               autoComplete={isRegister ? 'new-password' : 'current-password'}
+              placeholder="Mindestens 4 Zeichen"
             />
           </div>
 
-          <button type="submit" className="btn" style={{ width: '100%' }}>
+          <button type="submit" className="btn" style={{ width: '100%', marginTop: '0.5rem' }}>
             {isRegister ? 'Registrieren' : 'Anmelden'}
           </button>
         </form>
 
-        <div style={{ marginTop: '1rem', textAlign: 'center', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+        <div style={{ marginTop: '1.25rem', textAlign: 'center', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
           {isRegister ? 'Bereits ein Konto?' : 'Noch kein Konto?'}{' '}
           <button
             type="button"
@@ -81,7 +119,7 @@ function LoginPage() {
               border: 'none',
               padding: 0,
               color: 'var(--primary)',
-              fontWeight: 500,
+              fontWeight: 600,
               cursor: 'pointer',
               textDecoration: 'underline'
             }}

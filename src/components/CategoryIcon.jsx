@@ -5,7 +5,7 @@ const categoryMap = {
   'fisch': 'fish',
   'meeresfrüchte': 'fish',
   'obst': 'fruit',
-  'gemüse': 'fruit',
+  'gemüse': 'vegetable',
   'früchte': 'fruit',
   'getränke': 'drink',
   'alkohol': 'drink',
@@ -27,7 +27,49 @@ const categoryMap = {
   'haushalt': 'home',
   'reinigung': 'home',
   'tiefkühl': 'frozen',
-  'fertiggerichte': 'frozen'
+  'fertiggerichte': 'frozen',
+  'nudeln': 'pasta',
+  'reis': 'pasta',
+  'gewürze': 'pasta',
+  'saucen': 'pasta',
+  'öl': 'pasta',
+  'snacks': 'snack',
+  'chips': 'snack',
+  'nüsse': 'snack',
+  'obstkorb': 'fruit',
+  'salat': 'vegetable',
+  'nudelsalat': 'vegetable',
+  'kartoffelsalat': 'vegetable',
+  'betten': 'home',
+  'möbel': 'home',
+  'elektronik': 'tech',
+  'computer': 'tech',
+  'spielzeug': 'toy',
+  'baby': 'baby',
+  'windeln': 'baby',
+  'tiernahrung': 'pet'
+};
+
+const iconStyles = {
+  meat: { color: '#f87171', bg: 'rgba(248, 113, 113, 0.12)' },
+  fish: { color: '#60a5fa', bg: 'rgba(96, 165, 250, 0.12)' },
+  fruit: { color: '#fbbf24', bg: 'rgba(251, 191, 36, 0.12)' },
+  vegetable: { color: '#34d399', bg: 'rgba(52, 211, 153, 0.12)' },
+  drink: { color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.12)' },
+  dairy: { color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.12)' },
+  bakery: { color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.12)' },
+  sweet: { color: '#f472b6', bg: 'rgba(244, 114, 182, 0.12)' },
+  coffee: { color: '#a78bfa', bg: 'rgba(167, 139, 250, 0.12)' },
+  care: { color: '#c084fc', bg: 'rgba(192, 132, 252, 0.12)' },
+  home: { color: '#fb923c', bg: 'rgba(251, 146, 60, 0.12)' },
+  frozen: { color: '#22d3ee', bg: 'rgba(34, 211, 238, 0.12)' },
+  pasta: { color: '#e879f9', bg: 'rgba(232, 121, 249, 0.12)' },
+  snack: { color: '#a3e635', bg: 'rgba(163, 230, 53, 0.12)' },
+  tech: { color: '#818cf8', bg: 'rgba(129, 140, 248, 0.12)' },
+  toy: { color: '#fb7185', bg: 'rgba(251, 113, 133, 0.12)' },
+  baby: { color: '#fdba74', bg: 'rgba(253, 186, 116, 0.12)' },
+  pet: { color: '#2dd4bf', bg: 'rgba(45, 212, 191, 0.12)' },
+  default: { color: 'var(--primary)', bg: 'var(--primary-dim)' }
 };
 
 function normalizeCategory(category) {
@@ -64,7 +106,15 @@ function Icon({ name }) {
     case 'fruit':
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
-          <path d="M12 6c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7z" />
+          <circle cx="12" cy="14" r="7" />
+          <path d="M12 7V4" />
+          <path d="M15 4c-1-1-3-1-4 0" />
+        </svg>
+      );
+    case 'vegetable':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
+          <path d="M12 21a8 8 0 0 0 8-8c0-4-3-7-8-7S4 9 4 13a8 8 0 0 0 8 8z" />
           <path d="M12 6V3" />
           <path d="M12 3c1.5-1 3-1 4 0" />
         </svg>
@@ -135,6 +185,57 @@ function Icon({ name }) {
           <path d="M2 12h20" />
         </svg>
       );
+    case 'pasta':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 3v18" />
+          <path d="M5 7h14" />
+          <path d="M5 17h14" />
+        </svg>
+      );
+    case 'snack':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
+          <path d="M2 12h20" />
+          <path d="M6 8l12 8" />
+          <path d="M6 16l12-8" />
+        </svg>
+      );
+    case 'tech':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
+          <rect x="4" y="4" width="16" height="10" rx="2" />
+          <path d="M8 21h8" />
+          <path d="M12 17v4" />
+        </svg>
+      );
+    case 'toy':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="9" cy="10" r="1.5" fill="currentColor" />
+          <circle cx="15" cy="10" r="1.5" fill="currentColor" />
+          <path d="M9 15c1.5 1.5 4.5 1.5 6 0" />
+        </svg>
+      );
+    case 'baby':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
+          <circle cx="12" cy="7" r="4" />
+          <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+        </svg>
+      );
+    case 'pet':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
+          <path d="M10 8.5c-2 0-3.5 2-3.5 4.5 0 2.5 2 4.5 4.5 4.5h2c2.5 0 4.5-2 4.5-4.5 0-2.5-1.5-4.5-3.5-4.5" />
+          <circle cx="7" cy="10" r="1.5" fill="currentColor" />
+          <circle cx="17" cy="10" r="1.5" fill="currentColor" />
+          <circle cx="9" cy="7" r="1.5" fill="currentColor" />
+          <circle cx="15" cy="7" r="1.5" fill="currentColor" />
+        </svg>
+      );
     default:
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={style}>
@@ -150,6 +251,7 @@ function Icon({ name }) {
 
 function CategoryIcon({ category }) {
   const key = findIconKey(category);
+  const style = iconStyles[key] || iconStyles.default;
   return (
     <span
       title={category || 'Sonstiges'}
@@ -160,8 +262,8 @@ function CategoryIcon({ category }) {
         width: '2rem',
         height: '2rem',
         borderRadius: 'var(--radius)',
-        background: '#e0e7ff',
-        color: 'var(--primary)'
+        background: style.bg,
+        color: style.color
       }}
     >
       <Icon name={key} />
